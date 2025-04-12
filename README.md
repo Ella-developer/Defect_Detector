@@ -1,36 +1,39 @@
-# 🔥 ThermalDetector – AI-Based Anomaly Detection in Solar PV Panels using Thermal Imagery
+ب
+```markdown
+# 🔥 ThermalDetector – AI-Powered Anomaly Detection in Solar PV Panels using Thermal Imagery
 
-**Author:** Ella K.   
+**Author:** Ella K.  
+**API Developer:** Mohammadreza Dehghani  
 **Model:** YOLOv9  
-**Domain:** Renewable Energy | AI | Thermal Imagin | Computer Vision
+**Domain:** Renewable Energy | AI | Thermal Imaging | Computer Vision | FastAPI
 
 ---
 
 ## 🌍 Project Overview
 
-Photovoltaic (PV) technology plays a central role in the transition to renewable energy. Yet, many PV plants lack effective monitoring systems due to high costs and manual processes. This project aims to **automate solar panel inspection using aerial thermal imagery and deep learning**, particularly **YOLOv9** for object detection.
+Photovoltaic (PV) systems are crucial in the global clean energy transition. However, the lack of real-time, low-cost, and automated inspection solutions still affects the performance of many PV sites. This project introduces a complete AI-based pipeline to **automatically detect thermal anomalies in solar panels using YOLOv9**, deployed via a RESTful API with FastAPI and Docker.
 
-> **Goal:** Detect and classify different types of anomalies (e.g. hotspots, diode failures, string issues) in solar PV panels based on thermal images captured by drones.
+> **Objective:** Automatically classify 8 types of thermal defects in solar modules using annotated drone-captured grayscale images.
 
 ---
 
 ## 📦 Dataset
 
-- **Total Images:** 2723  
-- **Annotated Objects:** 7772  
-- **Annotation Format:** YOLOv9 (created via Roboflow)  
-- **Image Size:** Resized to `640x640`  
-- **Image Format:** Grayscale thermal images
+- **Original Images:** 2723  
+- **Augmented Samples:** ~7500  
+- **Total Objects:** 7772  
+- **Annotation Format:** YOLOv9 (via Roboflow)  
+- **Image Size:** 640×640  
+- **Image Format:** Grayscale
 
 ### 🔄 Data Augmentations
 
-Each original image was augmented to generate 3 versions, using:
-- 50% chance of horizontal flip  
-- 50% chance of vertical flip  
-- Random 90° rotations (0°, 90°, 180°, 270°)  
+- Horizontal / vertical flips (50%)  
+- Random 90° rotations  
 - Random shear: ±15°  
+- Hue, brightness, exposure: ±15°  
 
-### 🔍 Anomaly Classes
+### 🧪 Anomaly Classes
 
 - `Single Hotspot`  
 - `Multi Hotspots`  
@@ -43,48 +46,105 @@ Each original image was augmented to generate 3 versions, using:
 
 ---
 
-## ⚙️ Pipeline
+## ⚙️ Pipeline Overview
 
-1. **Research & Definition of Thermal Anomalies**  
-2. **Data Collection & Annotation via Roboflow**  
-3. **Preprocessing** – Orientation correction, resize, grayscale  
-4. **Augmentation** – Diverse techniques to improve robustness  
-5. **Modeling** – YOLOv9 training with evaluation metrics  
-6. **Model Saving** – Export of final model (`best.pt`)  
-7. **Deployment** – FastAPI/Flask-ready backend for REST inference
+1. Thermal anomaly research & taxonomy  
+2. Data collection & annotation via Roboflow  
+3. Preprocessing (resize, orientation, grayscale)  
+4. Data augmentation  
+5. YOLOv9 training and evaluation  
+6. Inference-ready export (`Th_G_v9.pt`)  
+7. API deployment using FastAPI & Docker  
 
 ---
 
 ## 📊 Model Evaluation
 
-| Metric               | Value |
-|----------------------|-------|
-| Precision            | 74%   |
-| Recall               | 76%   |
-| mAP@0.5              | 78%   |
-| mAP@0.5:0.95         | 61%   |
-| Fitness Score        | 63%   |
+| Metric           | Value |
+|------------------|-------|
+| Precision        | 74%   |
+| Recall           | 76%   |
+| mAP@0.5          | 78%   |
+| mAP@0.5:0.95     | 61%   |
+| Fitness Score    | 63%   |
 
-> These results show strong accuracy and reliability in detecting solar panel anomalies using thermal imagery.
+> YOLOv9 achieved robust performance on unseen thermal test images.
 
 ---
+
+## 🧠 API Overview (FastAPI)
+
+**Endpoint:** `POST /predict/`  
+**Input:** Thermal image (form-data)  
+**Output:**  
+- 🖼️ JPEG image with bounding boxes  
+- 📦 `X-Anomaly-Count` and `X-Detection-Result` in headers
 
 ## 🖼️ Visual Results
 
-Sample detections from the test set:
+| Input Thermal Image | YOLOv9 Detection Output |
+|---------------------|-------------------------|
+| ![Input](assets/INPUT.jpg) | ![Output](assets/OUTPUT.png) |
 
-![Sample Detection](assets/sample_detection.jpg)
+### 🔁 Example Request (curl)
+
+```bash
+curl -X POST "http://localhost:8000/predict/" \
+  -H  "accept: image/jpeg" \
+  -F "file=@sample.jpg" \
+  --output result.jpg
+```
+
+Or use the auto-generated docs at:
+
+> 🔗 http://localhost:8000/docs
 
 ---
 
-## 🚀 How to Run
+## 🐳 Dockerized Deployment
+
+### 🔧 Build & Run:
 
 ```bash
-# Install requirements
-pip install -r requirements.txt
+# Build Docker image
+docker build -t solar-api .
 
-# Run inference on a single image
-python detect.py --weights saved_models/best.pt --source path_to_image.jpg
+# Run container
+docker run -p 8000:8000 solar-api
+```
 
-# Launch API server (optional)
-python api_server.py
+### 📦 Or use Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+---
+
+## 📁 Project Structure
+
+```
+solar-anomaly-api/
+├── api.py
+├── predictor.py
+├── model_loader.py
+├── Th_G_v9.pt
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+## 👨‍💻 Developers
+
+- **Lead ML Engineer:** Ella K.  
+- **API & Infrastructure:**
+
+---
+
+## 📜 License
+
+MIT License — Free for academic and commercial use with attribution.
+```
