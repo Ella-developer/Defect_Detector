@@ -54,17 +54,6 @@ Photovoltaic (PV) systems are crucial in the global clean energy transition. How
 6. Inference-ready export (`Th_G_v9.pt`)  
 7. API deployment using FastAPI & Docker  
 
----
-
-## 📊 Model Evaluation
-
-| Metric           | Value |
-|------------------|-------|
-| Precision        | 74%   |
-| Recall           | 76%   |
-| mAP@0.5          | 78%   |
-| mAP@0.5:0.95     | 61%   |
-| Fitness Score    | 63%   |
 
 > YOLOv9 achieved robust performance on unseen thermal test images.
 
@@ -77,12 +66,6 @@ Photovoltaic (PV) systems are crucial in the global clean energy transition. How
 **Output:**  
 - 🖼️ JPEG image with bounding boxes  
 - 📦 `X-Anomaly-Count` and `X-Detection-Result` in headers
-
-## 🖼️ Visual Results
-
-| Input Thermal Image | YOLOv9 Detection Output |
-|---------------------|-------------------------|
-| ![Input](assets/INPUT.jpg) | ![Output](assets/OUTPUT.png) |
 
 ### 🔁 Example Request (curl)
 
