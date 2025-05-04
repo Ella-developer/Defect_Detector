@@ -1,4 +1,4 @@
-# 🔥 ThermalDetector – AI-Powered Anomaly Detection in Solar PV Panels using Thermal Imagery
+# ThermalDetector – AI-Powered Anomaly Detection in Solar PV Panels using Thermal Imagery
 
 **Author:** Ella K.  
 **API Developer:** Ella K. 
